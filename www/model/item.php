@@ -35,6 +35,7 @@ function get_items($db, $is_open = false){
       items
   ';
   if($is_open === true){
+    // .= は文字列の結合を表す
     $sql .= '
       WHERE status = 1
     ';

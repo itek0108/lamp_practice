@@ -23,12 +23,16 @@ $db = get_db_connect();
 $user = get_login_user($db);
 // フォームからの情報受け取り
 $cart_id = get_post('cart_id');
-// カートの商品を削除し、メッセージを表示
-if(delete_cart($db, $cart_id)){
-  set_message('カートを削除しました。');
-} else {
-  // 失敗した場合はメッセージの内容を変える
-  set_error('カートの削除に失敗しました。');
+$token = get_csrf_token();
+
+if(is_valid_csrf_token($token) !== false ){
+  // カートの商品を削除し、メッセージを表示
+  if(delete_cart($db, $cart_id)){
+    set_message('カートを削除しました。');
+  } else {
+    // 失敗した場合はメッセージの内容を変える
+    set_error('カートの削除に失敗しました。');
+  }
 }
 // リダイレクトしてページを更新
 redirect_to(CART_URL);

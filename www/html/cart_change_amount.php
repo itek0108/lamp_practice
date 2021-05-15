@@ -24,12 +24,16 @@ $user = get_login_user($db);
 // フォームからの情報受け取り
 $cart_id = get_post('cart_id');
 $amount = get_post('amount');
-// カートを更新し、メッセージを表示
-if(update_cart_amount($db, $cart_id, $amount)){
-  set_message('購入数を更新しました。');
-} else {
-// 失敗した場合はメッセージの内容を変える  
-  set_error('購入数の更新に失敗しました。');
+$token = get_csrf_token();
+
+if(is_valid_csrf_token($token) !== false ){
+  // カートを更新し、メッセージを表示
+  if(update_cart_amount($db, $cart_id, $amount)){
+    set_message('購入数を更新しました。');
+  } else {
+  // 失敗した場合はメッセージの内容を変える  
+    set_error('購入数の更新に失敗しました。');
+  }
 }
 // リダイレクトしてページを更新
 redirect_to(CART_URL);

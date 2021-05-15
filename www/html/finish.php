@@ -21,13 +21,17 @@ if(is_logined() === false){
 $db = get_db_connect();
 // ユーザーの情報を取得
 $user = get_login_user($db);
+// トークンを取得
+$token = get_csrf_token();
 // ユーザーIDを参照し、カートのデータを取得
 $carts = get_user_carts($db, $user['user_id']);
 // 購入処理
-if(purchase_carts($db, $carts) === false){
-  set_error('商品が購入できませんでした。');
-  redirect_to(CART_URL);
-} 
+if(is_valid_csrf_token($token) !== false ){
+  if(purchase_carts($db, $carts) === false){
+    set_error('商品が購入できませんでした。');
+    redirect_to(CART_URL);
+  } 
+}
 // カートの合計金額を計算
 $total_price = sum_carts($carts);
 // Viewファイル読み込み

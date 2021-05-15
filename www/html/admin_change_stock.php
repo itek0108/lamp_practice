@@ -26,12 +26,15 @@ if(is_admin($user) === false){
 // フォームからの情報受け取り
 $item_id = get_post('item_id');
 $stock = get_post('stock');
+$token = get_csrf_token();
 // 在庫数を変更し、メッセージを表示
-if(update_item_stock($db, $item_id, $stock)){
-  set_message('在庫数を変更しました。');
-} else {
-  // エラーメッセージを表示
-  set_error('在庫数の変更に失敗しました。');
+if(is_valid_csrf_token($token) !== false ){
+  if(update_item_stock($db, $item_id, $stock)){
+    set_message('在庫数を変更しました。');
+  } else {
+    // エラーメッセージを表示
+    set_error('在庫数の変更に失敗しました。');
+  }
 }
 // リダイレクトしてページを更新
 redirect_to(ADMIN_URL);

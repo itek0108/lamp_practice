@@ -26,7 +26,7 @@ if(is_admin($user) === false){
 // フォームからの情報受け取り
 $item_id = get_post('item_id');
 $stock = get_post('stock');
-$token = get_csrf_token();
+$token = get_post('token');
 // 在庫数を変更し、メッセージを表示
 if(is_valid_csrf_token($token) !== false ){
   if(update_item_stock($db, $item_id, $stock)){

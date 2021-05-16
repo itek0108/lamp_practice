@@ -101,7 +101,7 @@ function update_cart_amount($db, $cart_id, $amount){
     LIMIT 1
   ";
   $params = array();
-  array_push($params,$cart_id,$amount);
+  array_push($params,$amount,$cart_id);
   // SQLを実行
   return execute_query($db, $sql,$params);
 }

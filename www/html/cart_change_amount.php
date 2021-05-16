@@ -24,7 +24,7 @@ $user = get_login_user($db);
 // フォームからの情報受け取り
 $cart_id = get_post('cart_id');
 $amount = get_post('amount');
-$token = get_csrf_token();
+$token = get_post('token');
 
 if(is_valid_csrf_token($token) !== false ){
   // カートを更新し、メッセージを表示

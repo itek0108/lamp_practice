@@ -11,6 +11,7 @@ session_start();
 if(is_logined() === true){
   redirect_to(HOME_URL);
 }
-
+// トークンを作成
+$token = get_csrf_token();
 // Viewファイル読み込み
 include_once VIEW_PATH . 'login_view.php';

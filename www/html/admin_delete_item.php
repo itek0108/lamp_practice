@@ -25,7 +25,7 @@ if(is_admin($user) === false){
 }
 // フォームから情報受け取り
 $item_id = get_post('item_id');
-$token = get_csrf_token();
+$token = get_post('token');
 // 関数によって商品の削除を行い、結果によってメッセージの内容を変える
 if(is_valid_csrf_token($token) !== false ){
   if(destroy_item($db, $item_id) === true){

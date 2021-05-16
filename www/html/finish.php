@@ -21,8 +21,8 @@ if(is_logined() === false){
 $db = get_db_connect();
 // ユーザーの情報を取得
 $user = get_login_user($db);
-// トークンを取得
-$token = get_csrf_token();
+// フォームからの情報受け取り
+$token = get_post('token');
 // ユーザーIDを参照し、カートのデータを取得
 $carts = get_user_carts($db, $user['user_id']);
 // 購入処理

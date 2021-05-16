@@ -19,6 +19,8 @@ if(is_logined() === false){
 $db = get_db_connect();
 // ユーザーの情報を取得
 $user = get_login_user($db);
+// トークンを作成
+$token = get_csrf_token();
 // 商品一覧用の商品データを取得
 $items = get_open_items($db);
 // Viewファイル読み込み

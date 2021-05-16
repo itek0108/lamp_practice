@@ -17,7 +17,7 @@ if(is_logined() === true){
 $name = get_post('name');
 $password = get_post('password');
 $password_confirmation = get_post('password_confirmation');
-$token = get_csrf_token();
+$token = get_post('token');
 // データベースに接続
 $db = get_db_connect();
 

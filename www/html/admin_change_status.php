@@ -26,7 +26,7 @@ if(is_admin($user) === false){
 // フォームからの情報受け取り
 $item_id = get_post('item_id');
 $changes_to = get_post('changes_to');
-$token = get_csrf_token();
+$token = get_post('token');
 // 受け取ったステータスによって処理を分ける
 if(is_valid_csrf_token($token) !== false ){
   if($changes_to === 'open'){

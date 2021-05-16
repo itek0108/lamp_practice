@@ -25,12 +25,14 @@ if(is_admin($user) === false){
 }
 // フォームから情報受け取り
 $item_id = get_post('item_id');
-
+$token = get_post('token');
 // 関数によって商品の削除を行い、結果によってメッセージの内容を変える
-if(destroy_item($db, $item_id) === true){
-  set_message('商品を削除しました。');
-} else {
-  set_error('商品削除に失敗しました。');
+if(is_valid_csrf_token($token) !== false ){
+  if(destroy_item($db, $item_id) === true){
+    set_message('商品を削除しました。');
+  } else {
+    set_error('商品削除に失敗しました。');
+  }
 }
 
 

@@ -17,21 +17,23 @@ if(is_logined() === true){
 // フォームからの情報受け取り
 $name = get_post('name');
 $password = get_post('password');
-
+$token = get_post('token');
 // データベースに接続
 $db = get_db_connect();
 
 // 名前とパスワードが合っているかの確認
-$user = login_as($db, $name, $password);
-if( $user === false){
-  set_error('ログインに失敗しました。');
-  redirect_to(LOGIN_URL);
-}
+if(is_valid_csrf_token($token) !== false ){
+  $user = login_as($db, $name, $password);
+  if( $user === false){
+    set_error('ログインに失敗しました。');
+    redirect_to(LOGIN_URL);
+  }
 
-set_message('ログインしました。');
-// adminユーザーであれば、管理ページへリダイレクト
-if ($user['type'] === USER_TYPE_ADMIN){
-  redirect_to(ADMIN_URL);
+  set_message('ログインしました。');
+  // adminユーザーであれば、管理ページへリダイレクト
+  if ($user['type'] === USER_TYPE_ADMIN){
+    redirect_to(ADMIN_URL);
+  }
 }
 // 一般ユーザーはホームへ
 redirect_to(HOME_URL);

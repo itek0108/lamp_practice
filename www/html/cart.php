@@ -21,6 +21,8 @@ if(is_logined() === false){
 $db = get_db_connect();
 // ユーザーの情報を取得
 $user = get_login_user($db);
+// トークンを作成
+$token = get_csrf_token();
 // ユーザーIDを参照し、カートのデータを取得
 $carts = get_user_carts($db, $user['user_id']);
 // カート内の合計金額を計算

@@ -89,6 +89,38 @@ function insert_cart($db, $user_id, $item_id, $amount = 1){
   // SQLを実行
   return execute_query($db, $sql,$params);
 }
+
+function insert_history($db,$user_id){
+  $sql = "
+    INSERT INTO
+      histories(
+        user_id,
+        created
+      )
+      VALUES(?,?)
+  ";
+  $created = date('Y-m-d H:i:s');
+  $params = array();
+  array_push($params,$user_id,$created);
+  return execute_query($db, $sql,$params);
+}
+
+function insert_details($db,$history_id,$item_id,$price,$amount){
+  $sql = "
+    INSERT INTO
+      details(
+        history_id,
+        item_id,
+        price,
+        amount
+      )
+      VALUES(?,?,?,?)
+  ";
+  $params = array();
+  array_push($params,$history_id,$item_id,$price,$amount);
+  return execute_query($db, $sql,$params);
+}
+
 // カートの商品の数量を変更する
 function update_cart_amount($db, $cart_id, $amount){
   $sql = "

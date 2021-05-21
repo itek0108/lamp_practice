@@ -39,6 +39,61 @@ function get_user_by_name($db, $name){
   return fetch_query($db, $sql,$params);
 }
 
+function get_user_history($db, $user_id){
+  $sql = "
+  SELECT
+  histories.history_id,
+  created,
+  SUM(details.price*details.amount) AS total
+  FROM histories
+  JOIN details
+  ON histories.history_id = details.history_id
+  WHERE
+  user_id = ?
+  GROUP BY
+  histories.history_id
+  ";
+  $params = array();
+  array_push($params,$user_id);
+  return fetch_all_query($db, $sql, $params);
+}
+
+function get_all_user_history($db){
+  $sql = "
+    SELECT
+      histories.history_id,
+     created,
+    SUM(details.price*details.amount) AS total
+    FROM histories
+    JOIN details
+    ON histories.history_id = details.history_id
+    GROUP BY
+    histories.history_id
+  ";
+
+  return fetch_all_query($db, $sql);
+}
+
+function get_detail($db, $history_id){
+  $sql = "
+    SELECT
+      details.price,
+      details.amount,
+      items.name
+    FROM
+      details
+    JOIN
+      items
+    ON
+      details.item_id = items.item_id
+    WHERE
+      details.history_id = ?
+  ";
+  $params = array();
+  array_push($params,$history_id);
+  return fetch_all_query($db, $sql, $params);
+} 
+
 function login_as($db, $name, $password){
   $user = get_user_by_name($db, $name);
   if($user === false || $user['password'] !== $password){

@@ -31,6 +31,11 @@ if(is_valid_csrf_token($token) !== false ){
     set_error('商品が購入できませんでした。');
     redirect_to(CART_URL);
   } 
+  insert_history($db,$user['user_id']);
+  $history_id=$db->lastInsertId();
+  for ($i = 0; $i < count($carts); $i++){
+    insert_details($db,$history_id,$carts[$i]['item_id'],$carts[$i]['price'],$carts[$i]['amount']);
+  }
 }
 // カートの合計金額を計算
 $total_price = sum_carts($carts);

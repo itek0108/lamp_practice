@@ -94,6 +94,29 @@ function get_detail($db, $history_id){
   return fetch_all_query($db, $sql, $params);
 } 
 
+function get_ranking($db){
+  $sql ="
+  SELECT
+  items.name,
+  SUM(details.amount) AS sum_amount
+  FROM
+  details
+  JOIN
+  items
+  ON
+  details.item_id = items.item_id
+  WHERE
+  items.status = 1
+  GROUP BY
+  details.item_id
+  ORDER BY
+  sum_amount desc LIMIT 3
+  ";
+
+  return fetch_all_query($db,$sql);
+}
+
+
 function login_as($db, $name, $password){
   $user = get_user_by_name($db, $name);
   if($user === false || $user['password'] !== $password){

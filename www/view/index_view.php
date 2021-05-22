@@ -43,6 +43,20 @@
       </div>
     </div>
   </div>
-  
+  <h2>販売数ランキング</h2>
+  <table>
+    <tr>
+      <th>順位</th>
+      <th>商品名</th>
+      <th>購入数</th>
+    </tr>
+    <?php foreach ($ranking as $rank){ ?>
+    <tr>
+      <td><?php print(h($i++)); ?></td>
+      <td><?php print(h($rank['name'])); ?></td>
+      <td><?php print(h($rank['sum_amount'])); ?></td>
+    </tr>
+    <?php } ?>
+  </table>
 </body>
 </html>

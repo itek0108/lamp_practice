@@ -50,9 +50,9 @@
       <th>商品名</th>
       <th>購入数</th>
     </tr>
-    <?php foreach ($ranking as $rank){ ?>
+    <?php foreach ($ranking as $key => $rank){ ?>
     <tr>
-      <td><?php print(h($i++)); ?></td>
+      <td><?php print(h($key+1)); ?></td>
       <td><?php print(h($rank['name'])); ?></td>
       <td><?php print(h($rank['sum_amount'])); ?></td>
     </tr>

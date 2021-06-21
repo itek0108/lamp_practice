@@ -25,6 +25,5 @@ $token = get_csrf_token();
 $items = get_open_items($db);
 
 $ranking = get_ranking($db);
-$i = 1;
 // Viewファイル読み込み
 include_once VIEW_PATH . 'index_view.php';
